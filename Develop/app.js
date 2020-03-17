@@ -10,7 +10,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output")
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
-const teamMembers = [];
+const employees = [];
 
 console.log("Welcome! Let's gather some information.");
 
@@ -58,7 +58,12 @@ function addAnotherPrompt(){
         if(data.addAnother == "Yes"){
             starterPrompt();
         } else {
-            render(teamMembers);
+
+            fs.writeFile(__dirname + '/output/team.html', render(employees), function (err) {
+                if (err) throw err;
+                console.log('Saved! See your team here: http://localhost:8000/');
+              });
+
         }
     });
 };
@@ -92,7 +97,7 @@ const engineerQuestions = [
 function engineerPrompt() {
     inquirer.prompt(engineerQuestions).then(function(data){
         const newEngineer = new Engineer(data.name, data.id, data.email, data.github)
-        teamMembers.push(newEngineer);
+        employees.push(newEngineer);
         addAnotherPrompt();
     });
 };
@@ -125,7 +130,7 @@ const internQuestions = [
 function internPrompt() {
     inquirer.prompt(internQuestions).then(function(data){
         const newIntern = new Intern(data.name, data.id, data.email, data.school);
-        teamMembers.push(newIntern);
+        employees.push(newIntern);
         addAnotherPrompt();
     });
 };
@@ -158,7 +163,7 @@ const managerQuestions = [
 function managerPrompt() {
     inquirer.prompt(managerQuestions).then(function(data){
         const newManager = new Manager(data.name, data.id, data.email, data.officeNumber);
-        teamMembers.push(newManager);
+        employees.push(newManager);
         addAnotherPrompt();
     });
 };
@@ -167,7 +172,7 @@ function managerPrompt() {
 
 function onRequest(request, response) {
     
-    fs.readFile('./templates/main.html', null, function(error, data) {
+    fs.readFile(__dirname + '/output/team.html', null, function(error, data) {
         if (error) throw error;
         response.writeHead(200, {'Content-Type': 'text/html'});
         response.end(data);
