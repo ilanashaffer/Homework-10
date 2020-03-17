@@ -6,11 +6,11 @@ The application prompts the user for information about their role in the command
 
 It is then rendered using templates and displayed in the browser.  
 
-![Team Screen](assets/team_screen.png)  
+![Team Screen](Assets/team_screen.png)  
 
 Tests are run, utilizing npm package Jest, to ensure accurate code.
 
-![Testing Screen](assets/testing_screen.png) 
+![Testing Screen](Assets/testing_screen.png) 
 
 Built with:  
 Visual Studio Code  
